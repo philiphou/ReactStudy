@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSX 语法规则</title>
+    <style>
+        .title {
+            background-color: pink;
+            width: 200px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="test">
+    </div>
+    <!--  引入 react 核心库 -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react.development.js"></script>
+    <!-- 引入 react-dom 用于支持react 操作 DOM -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react-dom.development.js"></script>
+    <!--  引入 babel,用于将jsx 转换为js -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/babel.min.js"></script>
+    <script type="text/babel">
+        const myId= 'philip'; const myData='hello philip 666'; const VDOM = (
+        <div>
+            <h2 className='title' id={myId}>
+                <span style={{color: 'green',fontSize: '30px'}}>{myData}</span>
+            </h2>
+            <input type='text' />
+        </div>
+        ); ReactDOM.render(VDOM,document.getElementById('test')) /* JSX 语法规则： 1. 定义虚拟DOM时候，不要写引号 2. */
+    </script>
+</body>
+
+</html>

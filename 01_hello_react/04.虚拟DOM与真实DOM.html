@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>虚拟DOM与真实DOM</title>
+
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="test">
+    </div>
+    <!--  引入 react 核心库 -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react.development.js"></script>
+    <!-- 引入 react-dom 用于支持react 操作 DOM -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react-dom.development.js"></script>
+    <!--  引入 babel,用于将jsx 转换为js -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/babel.min.js"></script>
+    <script type="text/babel">
+        const VDOM = (
+        <h1 id='title'><span>Hello,React</span></h1>); ReactDOM.render(VDOM,document.getElementById('test')); console.log('虚拟DOM'+VDOM); const TDOM = document.getElementById('test'); console.log('真实DOM'+TDOM) ; debugger
+    </script>
+    <!--     1. 关于虚拟DOM： 
+        - 本质是 object 类型的对象，我们所说的一般对象 
+        - 虚拟DOM比较轻（身上属性少），真实DOM 比较重（属性多） 因为 虚拟DOM是react内部在用，无需真实DOM上那么多的属性；
+        - 虚拟DOM最终会被react转化为真实DOM，并且呈现在页面上；
+     -->
+</body>
+
+</html>

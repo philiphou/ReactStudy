@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS 创建虚拟DOM</title>
+
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="test">
+    </div>
+    <!--  引入 react 核心库 -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react.development.js"></script>
+    <!-- 引入 react-dom 用于支持react 操作 DOM -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react-dom.development.js"></script>
+
+    <script type="text/javascript">
+        //  1. 创建虚拟DOM, react有封装的 createElement 方法用来创建虚拟DOM
+        //  react.CreateElement(标签名，标签属性，标签体内容)
+        const VDOM = React.createElement('h1', {
+            id: 'title'
+        }, 'Hello React2')
+
+        // 2. 渲染虚拟DOM 到页面
+        ReactDOM.render(VDOM, document.getElementById('test')) // 注意： 1. script 的 text type 要写 babel， 因为下面是jsx 2. VDOM 下不加引号，因为不是字符串，3. ReactDOM.render 是个方法，用于渲染虚拟DOM， 接受的参数是虚拟dom 和 要渲染的位置
+    </script>
+</body>
+
+</html>

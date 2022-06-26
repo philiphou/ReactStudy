@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSX 小练习</title>
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="test">
+    </div>
+    <!--  引入 react 核心库 -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react.development.js"></script>
+    <!-- 引入 react-dom 用于支持react 操作 DOM -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react-dom.development.js"></script>
+    <!--  引入 babel,用于将jsx 转换为js -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/babel.min.js"></script>
+    <!--  
+        JSX中用{} 包括JS表达式， JS表达式包含：注意区分JS语句（代码）和JS表达式区别
+            1. 表达式： 一个表达式会产生一个值，可以放在任何一个需要值的地方； 例如： 
+                - a 变量
+                - a+b 
+                - demo(1) // 函数执行结果
+                - arr.map() 例如下面循环应用, map 是有返回值的
+                - function test() {}
+            2. 语句： 
+                - if 判断 属于语句
+                - for 循环 forEach 也是语句
+                - 。switch(){case:xxx} 也是语句 都是控制代码flow 的， 没有返回值
+    
+    -->
+    <script type="text/babel">
+        const data=['Angular','React','VUE']; const VDOM=(
+        <div>
+            <h1>前端JS框架列表</h1>
+            <ul>
+                {data.map((e,i)=>{return(
+                <li key={i}>{e}</li>)})}
+            </ul>
+        </div>
+        ); ReactDOM.render(VDOM,document.getElementById('test'))
+    </SCRIPT>
+</body>
+
+</html>
