@@ -49,13 +49,23 @@
             * 若小写字母开头，则将该标签转换为Html中同名元素，若html中无同名元素，则报错；
             * 若大写字母开头，则react就去渲染对应的组件，若组件没有定义，则报错；
 
-        -- 例子：
-                    <script type="text/babel">
-                        const myId= 'philip'; const myData='hello philip 666'; const VDOM = (
-                        <h2 id={myId}>
-                            <span>{myData}</span>
-                        </h2>
-                        ); ReactDOM.render(VDOM,document.getElementById('test'))
-                    </script>
-
-    
+* 模块与组件
+    - 模块： 
+        -- 理解： 向外提供特点功能的JS程序，一般就是一个JS文件
+        -- 为什么要拆成模块，随着业务逻辑增加，代码越来越多且复杂】
+        -- 作用： 复用 JS，简化JS的编写，提高JS运行效率；
+    - 组件
+        -- 理解： 用来实现局部功能效果的代码和资源的集合
+        -- 为什么一个页面更复杂
+        -- 作用： 复用编码，简化项目编码，提高运行效率
+    - 模块化和组件化；当应用是以JS模块和多组件方式实现的，这个应用就是模块化和组件化的项目；
+* 函数式组件：
+    - 例子：
+          function Democomponent(){ console.log(this);return (
+        <h2>我是函数式组件(适用于简单组件的定义)</h2>) }; 
+        ReactDOM.render(<Democomponent/>,document.getElementById('test')) 
+        // 上面的this 是 undefined, 因为 babel 编译后开启了严格模式，严格模式下自定义的函数不会让this指向window
+    - ReactDOM.render(<Democomponent/>,document.getElementById('test')) 执行逻辑：
+        -- React解析组件标签，找到 Democomponent组件
+        -- 发现组件是函数定义的， 随后调用该函数，将返回的虚拟DOM转为真实DOM，随后呈现在页面中；
+* 类相关的基本知识
