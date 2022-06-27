@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>类式组件</title>
+</head>
+
+<body>
+    <div id="test">
+
+    </div>
+    <!--  引入 react 核心库 -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react.development.js"></script>
+    <!-- 引入 react-dom 用于支持react 操作 DOM -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react-dom.development.js"></script>
+    <!--  引入 babel,用于将jsx 转换为js -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/babel.min.js"></script>
+    <script type="text/babel">
+
+        class Mycomponent extends React.Component{ render(){ return (
+        <h2> 我是类式组件哟（适用于复杂组件的创建）</h2>
+        ) } }; ReactDOM.render(
+        <Mycomponent/>,document.getElementById('test'))
+    </script>
+    <!-- 
+    类式组件里的 render()方法是放在哪里的？ 放在组件的原型对象上，供实例使用， render()中的this 是Mycomponent类（组件）的实例对象
+    ReactDOM.render(<Mycomponent/>,document.getElementById('test')) 执行逻辑： 
+    1. React 解析组件标签，找到了Mycomponent组件
+     2. 发现组件是类式组件，随后new 出一个该类的实例， 并通过实例去调用原型上的render()方法， 得到返回的虚拟DOM
+      3. 将render()返回的虚拟DOM转换为真实DOM， 呈现在页面上 */
+     -->
+
+</body>
+
+</html>
