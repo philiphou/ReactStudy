@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>React中的事件绑定</title>
+    <title>解决类中的this指向问题</title>
 </head>
 
 <body>
@@ -20,29 +20,40 @@
     <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/babel.min.js"></script>
     <script type="text/babel">
         //  1. 创建类式组件 Weather
-        let that;
+     
         class Weather extends React.Component{ 
             constructor(props){ 
                 super(props); 
                 this.state ={isHot:false,wind:"big"} 
-                that = this;
+                //  此处先看右面，第一 this是个实例对象，通过实例对象沿着原型链找到类原型上的changeWeather方法， 第二 将该方法的this绑定指向该实例对象， 
+                //第三 将找到的并绑定好的 方法赋值给 实例对象的属性 changeWeather, 此时，实例对象上就直接有了 changeWeather 方法，并且this是指向该实例对象
+                this.changeWeather= this.changeWeather.bind(this)
+               
             }; 
         
             render(){
+                console.log(this)
                  const {isHot}=this.state;
                  console.log({isHot}); 
                  return (
-                    <h1 onClick={changeWeather}>
+                   // 此时 onClick 的回调函数就是实例对象上的 changeWeather 方法，就是在 30行新赋值定义的
+                    <h1 onClick={this.changeWeather}> 
                         今天天气很{isHot?'炎热':'凉爽'}
                     </h1>
                     )
                  } 
+            // changeWeather 放在哪里了？ --- 放在了 Weather 的原型上，供Weather 的实例对象调用
+            // 由于changeWeather 是作为 onClick 的回调，所以不是通过实例调用的，是直接调用的，
+            // 由于类里面的方法，默认开启了严格模式， 所以 changeWeather 中的this 为 undefined;
+            //  为了解决这个问题， 就需要把
+            changeWeather(){
+             console.log(this.state.isHot)        
+            }
         }; 
         // 2. 渲染组件到页面
         ReactDOM.render(<Weather/>,document.getElementById('test'))
 
-        function changeWeather(){
-           alert(that.state.isHot)        }
+     
 
     </script>
 

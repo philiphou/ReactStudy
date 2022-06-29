@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bind 应用</title>
+</head>
+<body>
+    <script type = 'text/javascript'>
+        function demo(){
+            console.log(this)
+        }
+  demo() // 输出： window
+  const x = demo.bind({a:'love',b:22})
+  x() // 输出： {a:'love',b:22}
+    </script>
+</body>
+</html>
