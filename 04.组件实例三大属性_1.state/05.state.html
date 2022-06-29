@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>State 属性</title>
+</head>
+
+<body>
+    <div id="test">
+
+    </div>
+    <!--  引入 react 核心库 -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react.development.js"></script>
+    <!-- 引入 react-dom 用于支持react 操作 DOM -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react-dom.development.js"></script>
+    <!--  引入 babel,用于将jsx 转换为js -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/babel.min.js"></script>
+    <script type="text/babel">
+        //  1. 创建类式组件 Weather
+     
+        class Weather extends React.Component{ 
+            // 构造器调用几次？ 答： 1次，因为render 只有在初始化时候第一次生成了一个实例对象组件
+            constructor(props){ 
+                console.log('constructor')
+                super(props); 
+                this.state ={isHot:false,wind:"微风"} 
+                //  此处先看右面，第一 this是个实例对象，通过实例对象沿着原型链找到类原型上的changeWeather方法， 第二 将该方法的this绑定指向该实例对象， 
+                //第三 将找到的并绑定好的 方法赋值给 实例对象的属性 changeWeather, 此时，实例对象上就直接有了 changeWeather 方法，并且this是指向该实例对象
+                this.changeWeather= this.changeWeather.bind(this)
+               
+            }; 
+        //   render() 调用几次？ 答： 1 + n 次，n 是状态每次更新时候重新渲染的次数
+            render(){
+                console.log(this)
+                 const {isHot,wind}=this.state;
+                 console.log({isHot}); 
+                 return (
+                   // 此时 onClick 的回调函数就是实例对象上的 changeWeather 方法，就是在 30行新赋值定义的
+                    <h1 onClick={this.changeWeather}> 
+                        今天天气很{isHot?'炎热':'凉爽'},{wind}
+                    </h1>
+                    )
+                 } 
+            // changeWeather 放在哪里了？ --- 放在了 Weather 的原型上，供Weather 的实例对象调用
+            // 由于changeWeather 是作为 onClick 的回调，所以不是通过实例调用的，是直接调用的，
+            // 由于类里面的方法，默认开启了严格模式， 所以 changeWeather 中的this 为 undefined;
+            //  为了解决这个问题， 就需要第30行的操作
+            //  changeWeather 调用几次？ 答： 点几次就调用几次
+            changeWeather(){
+                console.log(this)
+            // 获取原理的 isHot值
+            const isHot = this.state.isHot;
+            //  严重注意： react组件中的状态不可以直接更改，react不会认可，即使是在代码层面改了，但是component中的状态值不会变！要借助内置的API 去更改， 叫 setState()
+            //this.state.isHot = !isHot // 此处是直接更改，是错误做法。
+            //  严重注意： 状态必须通过setState进行修改，且是合并，剩下的属性不会改变；不是重新设置所有属性
+             this.setState({isHot:!isHot})
+            console.log(this.state.isHot)
+            } // 虽然多次点击可以看到输出的 state属性值在 true和 false之间连续切换，但是 react渲染组件时候不认这种改法，所以页面的渲染状态不会同时更新！
+        }; 
+
+        // 2. 渲染组件到页面
+        ReactDOM.render(<Weather/>,document.getElementById('test'))
+
+     
+
+    </script>
+
+</body>
+
+</html>
