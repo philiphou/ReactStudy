@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>State 属性简写版</title>
+</head>
+
+<body>
+    <div id="test">
+
+    </div>
+    <!--  引入 react 核心库 -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react.development.js"></script>
+    <!-- 引入 react-dom 用于支持react 操作 DOM -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react-dom.development.js"></script>
+    <!--  引入 babel,用于将jsx 转换为js -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/babel.min.js"></script>
+    <script type="text/babel">
+      
+       //  1. 创建类式组件 Weather
+        class Weather extends React.Component{ 
+            // 2. 初始化 state
+            state={isHot:true,wind:"微风"}
+            // 给实例对象添加changeWeather 属性方法，用赋值箭头函数的方式让函数里的this指向实例对象
+            changeWeather = ()=>{
+                console.log(this)
+                const isHot=this.state.isHot
+                this.setState({isHot:!isHot})
+            }
+            render(){
+                    const {isHot,wind}=this.state;
+                    return (
+                 
+                    <h1 onClick={this.changeWeather}> 
+                        今天天气很{isHot?'炎热':'凉爽'},{wind}
+                    </h1>
+                    )
+                 } 
+        }
+        //  3. 渲染组件到页面
+        ReactDOM.render(<Weather/>,document.getElementById('test'))
+
+     
+
+    </script>
+
+</body>
+
+</html>

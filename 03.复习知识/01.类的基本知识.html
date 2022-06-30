@@ -71,6 +71,26 @@
             2. 如果A类继承了B类，且A类中写了构造器，那么A类构造器中， super()是必须要调用的，调用时候还要传入A,B共有的属性；
             3. 类中所定义的方法，都是放在了类的原型对象上，供实例去使用；
             */
+        class Car{
+            constructor(brand,price){
+                this.brand = brand,
+                this.price = price,
+                //  此处是将类的原型上的run方法通过bind绑定到实例对象上，这样实例对象身上本身就有了run属性方法，构造器中的this是指的类的实例对象
+                this.run = this.run.bind(this)
+            }
+            //  此处是构造函数以外的给Car的实例对象添加的属性： whellNumber 和 engine
+            //  类中可以直接写赋值语句，如下的代码含义是给Car的实例对象添加属性，属性名为 wheelNumber 和 engine, 属性值为 4 和 gas
+
+            wheelNumber = 4
+            engine = 'gas'
+            //  下面的类中的自定义方法是放在类的原型上，类的实例对象可以通过原型链寻找并调用
+            run(){
+                console.log(' i can run run run')
+            }
+
+        }
+        const c1 = new Car('宝马',588)
+        console.log(c1) // 输出： {wheelNumber: 4, engine: 'gas', brand: '宝马', price: 588}
     </script>
 </body>
 
