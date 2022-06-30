@@ -15,26 +15,17 @@
     <!--  引入 react 核心库 -->
     <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react.development.js"></script>
     <!-- 引入 react-dom 用于支持react 操作 DOM -->
-    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react-dom.development.js"></script>
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react-dom.development.js"></script> 
     <!--  引入 babel,用于将jsx 转换为js -->
     <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/babel.min.js"></script>
+    <!-- 引入 prop-types 依赖，用于对组件标签属性进行限制 -->
+    <script type="text/javascript" src = '../react全家桶资料/03_依赖包/旧版本/prop-types.js'></script> 
     <script type="text/babel">
       
-    // 1. 创建组件
-
     class Person extends React.Component{
-        // constructor(props){
-        //     console.log(props)
-        //     super(props)
-        // }
-        render(){
-            //  首先 render 方法里的this 就是类的实例对象，
-            // 第二： react 组件的实例对象上都有一个属性叫props, props 的属性键值对可以通过 ReactDom.render 函数里在组件后面以属性名属性值的方法传递进来，第47行；
-            console.log(this)
+            render(){
             const{name,age,gender}= this.props
-             
             return(
-
                 <ul>
                     <li>姓名： {name}</li>
                     <li>年龄： {age+1}</li>
@@ -42,14 +33,24 @@
                 </ul>
             )
         }
+       
     }
- const p = {name:'jack',age:28,gender:'male'}
-    ReactDOM.render(<Person {...p}/>,document.getElementById('test')) // {...p} 此处花括号其实表示的是要写JSX语法表达式了， babel 加 react 就允许用 展开运算符展开一个对象了，但原生JS 不行。
-
-     
-
+    //  给类的props 设置限制
+    Person.propTypes={
+            name:PropTypes.string.isrequired,
+            gender:PropTypes.string,
+            speak:PropTypes.func
+        }
+        //  给类的props 设置默认值
+    Person.defaultProps={
+        gender:'unknown',
+        age:88
+    }
+    
+    ReactDOM.render(<Person name='jack' speak='{speak}'/>,document.getElementById('test'))
+    function speak(){
+        console.log(' i can speak')
+    }
     </script>
-
 </body>
-
 </html>

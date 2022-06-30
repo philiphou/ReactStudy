@@ -21,6 +21,19 @@
             })
           }
           console.log(sum(1,3,5,7)) // 输出：[1,3,5,7] 16
+           // 复制一个对象
+          let person = {name:'tom',age:18}
+          //  console.log({...person}) // 此行代码报错，因为三点运算符不能展开对象；
+          let person2={...person} // 此处是一个ES6新语法，利用花括号加展开运算符，这样可以复制一份对象，此处花括号就代表一个object, 新建的object,包含创建对象的堆内存，本质是深度克隆，创建一个新对象，有新的引用地址和新的堆内存空间；
+          console.log(person2) // 输出： {name: 'tom', age: 18}
+          person.name = 'philip' // 此处只是对  person 对象的name 属性修改，对person2 没有影响，因为 person2 和 person在堆内存中各自都有一个空间储存
+          let person3 = person //此处不是新建一个对象person3, 堆内存中也就没有额外空间储存person3， 只是将 person的引用地址也传递给了 person3， 这样person3指向的堆内存和person是一样的。 
+          console.log(person3) //{name: 'philip', age: 18}
+          console.log(person2) // {name: 'tom', age: 18} 依旧是 tom, 因为第27行代码相当于在堆内存重新开辟了空间，创建了person2对象，只是初始化属性是复制的person的属性键值对
+          // 复制一个对象时同时修改它的属性
+          let person4 = {...person,name:'jack',address:'toronto'}
+          console.log(person4)// 输出：{name: 'jack', age: 18, address: 'toronto'}
+
     </script>
 </body>
 </html>
