@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对象相关的知识</title>
+</head>
+<body>
+    <script>
+        let a = 'name'
+        let obj={} // 如果要让obj 变成 {name:'tom'}
+        obj = {[a]:'tom'} // 此处对象中的属性名可以用变量读入，方式是用[]引入
+        console.log(obj) // 输出：{name:'tom'}
+        
+    </script>
+</body>
+</html>

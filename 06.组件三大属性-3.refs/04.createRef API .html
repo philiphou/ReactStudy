@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最新的ref 方式之createRef API</title>
+</head>
+
+<body>
+    <div id="test">
+
+    </div>
+    <!--  引入 react 核心库 -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react.development.js"></script>
+    <!-- 引入 react-dom 用于支持react 操作 DOM -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react-dom.development.js"></script>
+    <!--  引入 babel,用于将jsx 转换为js -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/babel.min.js"></script>
+    <script type="text/babel">
+       class Demo extends React.Component{
+        /*
+        Rect.createRef() 调用后可以返回一个容器，该容器可以存储被ref所标识的节点;
+        myRef 是在类的实例自身上的属性
+          <input ref={this.myRef}  type="text"/> 这句代码中的ref={this.myRef}就会把此 input 节点存入myRef这个容器
+          myRef 其实是个对象： {current：节点}
+          该容器是专人专用的，只能存一个值；后放入的会覆盖前面的；
+        */
+        myRef = React.createRef()
+        showData = ()=>{
+          console.log(this.myRef.current.value)
+        }
+        render(){
+               return(
+          <div>
+            <input ref={this.myRef}  type="text"/>
+            <button onClick={this.showData}>点我显示输入数据</button>
+          </div>
+    
+        )
+       }
+       }
+      
+      ReactDOM.render(<Demo/>,document.getElementById('test'))
+
+    </script>
+
+</body>
+
+</html>

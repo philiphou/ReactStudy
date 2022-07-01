@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高阶函数和函数柯里化</title>
+</head>
+
+<body>
+    <div id="test">
+
+    </div>
+    <!--  引入 react 核心库 -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react.development.js"></script>
+    <!-- 引入 react-dom 用于支持react 操作 DOM -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react-dom.development.js"></script>
+    <!--  引入 babel,用于将jsx 转换为js -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/babel.min.js"></script>
+    <script type="text/babel">
+    //    1. 创建组件
+    class Login extends React.Component{
+        // 初始化状态
+        state={
+            username:'',
+            password:''
+        }
+         
+        //  保存表单数据
+        saveFormdata=(dataType,value)=>{
+            this.setState({
+              [dataType]:event.target.value
+            })
+            }
+           
+      
+              handleSubmit=()=>{
+        event.preventDefault()
+        alert(`your user name is ${this.state.username} and your password is ${this.state.password}` )
+        }
+        render(){
+            return(
+                  <form action="http://www.atguigu.com" onSubmit={this.handleSubmit}>
+                    用户名：<input  onChange = {(event)=>{this.saveFormdata('username',event)}} type="text" name="username"/>
+                    密码：<input onChange ={(event)=>{this.saveFormdata('password',event)}} type="password" name = 'password'/>
+                    <button>登录</button>
+                  </form>
+            
+            )
+        }
+    }
+    ReactDOM.render(<Login/>,document.getElementById('test'))
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>回调函数形式的ref</title>
+</head>
+
+<body>
+    <div id="test">
+
+    </div>
+    <!--  引入 react 核心库 -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react.development.js"></script>
+    <!-- 引入 react-dom 用于支持react 操作 DOM -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react-dom.development.js"></script>
+    <!--  引入 babel,用于将jsx 转换为js -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/babel.min.js"></script>
+    <script type="text/babel">
+      
+      class Demo extends React.Component{
+        showData=()=>{
+          alert(this.input1.value)
+        }
+       
+        render(){
+           // 下面ref 给出一个回调函数， 回调函数里的参数c就是这个input 节点，然后将这个节点a 赋值给 this.input1, 此处 render 里的this 是组件实例对象
+          //   总结： 回调函数式的ref 本质就是ref 是一个回调函数，这个函数有个参数，就是自动把这个节点作为参数传入这个函数，我们只需要用this.属性名=节点 来挂靠一下。 
+            return(
+                <div>
+                  <input ref={(c)=>{console.log(this);console.log(c); this.input1 =c}} type='text' placeholder='点击按钮提示数据'/>&nbsp;
+                  <button onClick={this.showData}>点我显示数据</button> &nbsp;
+                
+                  </div>
+            )
+        }
+
+      }
+      ReactDOM.render(<Demo/>,document.getElementById('test'))
+
+    </script>
+
+</body>
+
+</html>

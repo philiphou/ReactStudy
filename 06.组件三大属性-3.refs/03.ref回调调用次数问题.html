@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>State 属性简写版</title>
+    <title>回调函数ref 的调用次数</title>
 </head>
 
 <body>
@@ -19,28 +19,36 @@
     <!--  引入 babel,用于将jsx 转换为js -->
     <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/babel.min.js"></script>
     <script type="text/babel">
-      
-      class Demo extends React.Component{
-        showData=()=>{
-         console.log(this) // 此处的this 是类 Demo 的实例对象
-         console.log(this.refs.input1) // 此处是输出节点 input ( ref 是 input1 的节点), 是真实DOM的节点，
-         alert(this.refs.input1.value)
-         
+       class Demo extends React.Component{
+        state={
+          isHot:true
         }
-        showData2=()=>{
-          alert(this.refs.input2.value)
-         
+        showData = ()=>{
+          alert(this.input1.value)
         }
-        render(){
-            return(
-                <div>
-                  <input ref='input1' type='text' placeholder='点击按钮提示数据'/>&nbsp;
-                  <button ref = 'button001' onClick={this.showData}>点我显示数据</button> &nbsp;
-                  <input ref = 'input2' onBlur = {this.showData2} type="text"placeholder='失去焦点提示数据'/>
-                  </div>
-            )
+        changeWeather =()=>{
+        let {isHot} = this.state
+          this.setState({
+            isHot:!isHot
+          })
         }
-
+        saveInput=(c)=>{
+          this.input1=c
+          console.log(c)
+        
+        }
+       render(){
+        const {isHot}=this.state
+        return(
+          <div>
+            <h2 onClick={this.changeWeather}>今天天气很{isHot?'炎热':'凉爽'}</h2>
+            {/*<input ref={(c)=>{console.log(c);this.input1=c}}  type="text"/>*/}
+            <input ref={this.saveInput}  type="text"/>
+            <button onClick={this.showData}>点我显示输入数据</button>
+          </div>
+    
+        )
+       }
       }
       ReactDOM.render(<Demo/>,document.getElementById('test'))
 

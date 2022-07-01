@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高阶函数和函数柯里化</title>
+</head>
+
+<body>
+    <div id="test">
+
+    </div>
+    <!--  引入 react 核心库 -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react.development.js"></script>
+    <!-- 引入 react-dom 用于支持react 操作 DOM -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react-dom.development.js"></script>
+    <!--  引入 babel,用于将jsx 转换为js -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/babel.min.js"></script>
+    <script type="text/babel">
+    //    1. 创建组件
+    class Login extends React.Component{
+        // 初始化状态
+        state={
+            username:'',
+            password:''
+        }
+        /*  
+        高阶函数需要满足以下2个条件中的任意一个：
+            1. 若A 函数，接收的参数是个函数，那么A就是高阶函数
+            2. 若A函数，调用的返回值依然是一个函数，那么A就可以称之为高阶函数；
+            常见的高阶函数有： Promise; SetTimeout(); arr.map(); 
+            此处 saveFormdata 就是高阶函数；
+            函数的柯里化： 通过函数调用继续返回函数的方式，实现多次接收参数最后统一处理的函数编码形式；
+        */
+       
+        //  保存表单数据
+        saveFormdata=(dataType)=>{
+            return (event)=>{
+            this.setState({
+                //  注意： dataType 是形参，如果要读取，用方括号引入；
+                [dataType]:event.target.value
+            })
+            }
+           
+        }
+      
+         handleSubmit=()=>{
+        event.preventDefault()
+        alert(`your user name is ${this.state.username} and your password is ${this.state.password}` )
+        }
+        render(){
+            return(
+                  <form action="http://www.atguigu.com" onSubmit={this.handleSubmit}>
+                    用户名：<input  onChange = {this.saveFormdata('username')} type="text" name="username"/>
+                    密码：<input onChange ={this.saveFormdata('password')} type="password" name = 'password'/>
+                    <button>登录</button>
+                  </form>
+            
+            )
+        }
+    }
+    ReactDOM.render(<Login/>,document.getElementById('test'))
+    </script>
+</body>
+</html>
