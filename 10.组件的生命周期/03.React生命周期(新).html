@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>React 组件生命周期（旧）</title>
+    <title>React 组件生命周期（新）</title>
 </head>
 
 <body>
@@ -13,9 +13,9 @@
 
     </div>
     <!--  引入 react 核心库 -->
-    <script type="text/javascript" src="../react全家桶资料/03_依赖包/旧版本/react.development.js"></script>
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react.development.js"></script>
     <!-- 引入 react-dom 用于支持react 操作 DOM -->
-    <script type="text/javascript" src="../react全家桶资料/03_依赖包/旧版本/react-dom.development.js"></script>
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react-dom.development.js"></script>
     <!--  引入 babel,用于将jsx 转换为js -->
     <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/babel.min.js"></script>
     <script type="text/babel">
@@ -29,18 +29,29 @@
             this.state={
                         count:0
                         }
-
         }
-     
+        // 新版的生命周期中这个钩子是类的静态属性方法，需要加 static 关键字，并且必须要有个返回值，返回值是更新的sate对象或者 null； 比较罕见，也不常用；
+        //  唯一重点就是： state 的值永远取决于 props
+        //  若 state 的值任何时候都取决于 props 则就可以使用这个钩子；
+        static getDerivedStateFromProps(props,state){
+            console.log('Count --- getDerivedStateFromProps',props,state)
+           // return {count:108} // 一旦返回的一个新的状态对象，就会把状态更新，不会以初始化为主了，而且以后都改不了了。。
+           //return props; // return 的这个props 对象，就会被当成derived new state， 当做派生的新的state 对象； 然后渲染到页面， 页面变成199， 并且不再有交互；
+           return null
+        }
+        getSnapshotBeforeUpdate(){
+            //getSnapsh这个钩子必须返回一个snapshot value 或者一个 null
+            //  snapshot value 可以是任何值， 并且此钩子的任何返回值都将作为props 传递个 componentDidUpdate
+            //  这个钩子的主要作用就是在组件更新之前来一个快照，记住美好瞬间~~~, 快照就是想拍什么就拍什么， 比如可以记住滚动条位置，等等。。
+                console.log('count--getSnapshotBeforeUpdate')
+                return 'liyi55220'
+            
+        }
         // +1按钮的回调
         add = ()=>{
             this.setState({
                 count:this.state.count+1
             })
-        }
-        // 生命周期钩子--组件将要挂载的钩子
-        componentWillMount(){
-            console.log('count --- componentWillMount')
         }
         // 组件挂载完毕的钩子
         componentDidMount(){
@@ -59,7 +70,7 @@
                     </div>
                 )
             }
-       
+    
         //  卸载组件按钮的回调
         death = ()=>{
             ReactDOM.unmountComponentAtNode(document.getElementById('test'))
@@ -73,13 +84,12 @@
             console.log('count --- shouldComponentUpdate')
             return true
         }
-        // 组件将要更新的钩子
-        componentWillUpdate(){
-            console.log('count---componentWillUpdate')
-        }
+      
+      
         //  组件更新完毕的钩子
-        componentDidUpdate(){
-            console.log('count --- componentDidUpdate')
+        componentDidUpdate(preProps,preState,snapshot){
+            //  这个钩子可以接收两个参数，分别是preProps 和 preState 先前的状态
+            console.log('count --- componentDidUpdate',preProps,preState,snapshot)
             console.log('================')
 
         }
@@ -90,62 +100,8 @@
            this.forceUpdate()
         }
     }
-    //  A 是父组件，B 是子组件
-    class A extends React.Component{
-        state={
-            carName:'Benzi'
-        }
-        change = ()=>{
-            const {carName}=this.state
-            this.setState({
-                carName:"BMW"
-            })
-        }
-        render(){
-            const {carName}=this.state
-            return(
-                <div>
-                    <div>我是A组件</div>
-                    <button onClick={this.change}> 换车</button>
-                    <B carName={carName}/>
-                </div>
-              
-
-            )
-        }
-    }
-    class B extends React.Component{
-        // B 组件作为A组件的子组件，A 组件给B组件传递了props, B组件在接收props时候有一个钩子叫： componentWillReceiveProps()
-        //  这个钩子第一次传的不算，新的props传的才算。此钩子应该叫： componentWillReceiveNewProps()
-        componentWillReceiveProps(){
-            console.log('B--ComponentWillReceiveProps')
-        }
-        // 控制组件更新的阀门
-        shouldComponentUpdate(){
-            console.log('B--shouldComponentUpdate')
-            return true;
-        }
-        // 组件将要更新钩子
-        componentWillUpdate(){
-            console.log('B--ComponentWillUpdate')
-        }
-         // 组件完成更新钩子
-         componentDidUpdate(){
-            console.log('B--ComponentDidUpdate')
-        }
-
-        componentDidMount(){
-            console.log("B--ComponentDidMount")
-        }
-        render(){
-            console.log('B--Component render')
-            return(
-               <div>我是B组件,接收到的车是：{this.props.carName}</div>
-                )
-        }
-    }
-       // 2. 渲染组件
-    ReactDOM.render(<A/>,document.getElementById('test'))
+   
+    ReactDOM.render(<Count count={199}/>,document.getElementById('test'))
     </script>
 </body>
 </html>

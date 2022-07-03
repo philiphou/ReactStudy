@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React 组件生命周期（新）</title>
+    <style>
+        .list{
+            margin:50px auto;
+            width: 150px;
+            height: 150px;
+            background-color: #bfa;
+            overflow: auto
+        }
+        .news{
+            height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="test"></div>
+   
+    <!--  引入 react 核心库 -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react.development.js"></script>
+    <!-- 引入 react-dom 用于支持react 操作 DOM -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react-dom.development.js"></script>
+    <!--  引入 babel,用于将jsx 转换为js -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/babel.min.js"></script>
+    <script type="text/babel">
+        class NewsList extends React.Component{
+                state={
+                    newsArr:[]
+                }
+                componentDidMount(){
+                    console.log('did mount')
+                    setInterval(
+                        ()=>{
+                            console.log('setInterval')
+                            //  获取原状态
+                            const {newsArr}=this.state
+                            //   模拟一条新闻
+                            const news = '新闻'+(newsArr.length+1)
+                            this.setState({
+                           newsArr:[news,...newsArr]
+
+                        })},1000
+                    )
+                }
+                //  更新前锁定功能
+                getSnapshotBeforeUpdate(){
+                    return this.refs.list.scrollHeight
+                    
+
+                }
+                componentDidUpdate(preprops,prestate,height){
+                    this.refs.list.scrollTop += this.refs.list.scrollHeight - height
+                }
+                render(){
+                    return(
+                         <div className="list" ref='list'>
+                       {
+                        this.state.newsArr.map(
+                            (item,n)=>{
+                                return <div className='news' key={n}> {item}</div> 
+                            }
+                        )
+                       }
+                     </div>
+                )
+                }
+
+        }
+        ReactDOM.render(<NewsList/>,document.getElementById('test'))
+    </script>
+</body>
+</html>

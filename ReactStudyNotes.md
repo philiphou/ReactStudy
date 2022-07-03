@@ -170,4 +170,23 @@
     - 组件从创建到死亡会经理一些特定的阶段
     - React组件中包含一系列钩子函数（生命周期回调函数）会在特定的时刻调用
     - 我们在定义组件时候，会在特定的生命周期回调函数中做特定的工作
+* 生命周期阶段 (旧)
+    - 初始化阶段：由ReactDOM.render()触发，初次渲染
+        -- constructor()
+        -- componentWillMount()
+        -- render()
+        -- componentDidMount() ---->这个钩子比较常用，一般在这个钩子中做一些初始化的操作， 例如开启定时器，发送网络请求，订阅消息等。
+    - 更新阶段： 由组件内部 this.setState() 或者父组件重新render 触发
+        -- shouldComponentUpdate()
+        -- componentWillUpdate()
+        -- render() ----> 基本一直在用。
+        -- componentDidUpdate()
+    - 卸载组件： 由 ReactDOM.unmountComponetAtNode()触发
+        -- componentWillUnmount() ----> 这个钩子比较常用，一般做一些收尾的事： 关闭定时器， 取消订阅消息；
+* 生命周期阶段 (新)
+    - 新版本中，除了 componentWillUnMount() 之外所有的Will钩子都需要在前面加 UNSAFE_: 
+    - 包括： ComponentWillMount; ComponentWillUpdate; ComponentWillReceiveProps
+    - React 正在设计异步渲染， 过时的生命周期会给React未来版本推出异步渲染后带来不安全的编码实践， 就是上面这三个 UNSAFE 的钩子；预计在未来的异步渲染中，这些钩子可能被误用，所以尽量避免使用；
+    - 
+        
 
