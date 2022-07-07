@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React 的 Diffing 算法</title>
+    <style>
+        .list{
+            margin:50px auto;
+            width: 150px;
+            height: 150px;
+            background-color: #bfa;
+            overflow: auto
+        }
+        .news{
+            height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="test"></div>
+   
+   
+    <!--  引入 react 核心库 -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react.development.js"></script>
+    <!-- 引入 react-dom 用于支持react 操作 DOM -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/react-dom.development.js"></script>
+    <!--  引入 babel,用于将jsx 转换为js -->
+    <script type="text/javascript" src="../react全家桶资料/03_依赖包/新版本/babel.min.js"></script>
+    <script type="text/babel">
+         let group = [
+            {id:1,name:'philip',age:18},
+            {id:2,name:'jack',age:19}]
+        let p = {id:3,name:'alan',age:20}
+        class Person extends React.Component{
+            state={
+                person: group
+                       
+            }
+            addAlan = ()=>{
+                this.setState({
+                    person:[p,...group]
+                    
+                })
+                console.log(this.state.person)
+            }
+            render(){
+            const {person}=this.state
+               return(
+                <div>
+                    <h2>展示人员信息</h2>
+                    <button onClick={this.addAlan}>add Alan</button>
+                    {person.map((e)=>{
+                        // return <li key={index}>{e.name}----{e.age} <input type='text'></input></li>
+                        return <li key={e.id}>{e.name}----{e.age} <input type='text'></input></li>
+                    })}
+                </div>
+               )
+                
+            }
+    
+        }
+        ReactDOM.render(<Person/>,document.getElementById('test'))
+    </script>
+</body>
+</html>

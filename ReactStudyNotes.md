@@ -187,6 +187,48 @@
     - 新版本中，除了 componentWillUnMount() 之外所有的Will钩子都需要在前面加 UNSAFE_: 
     - 包括： ComponentWillMount; ComponentWillUpdate; ComponentWillReceiveProps
     - React 正在设计异步渲染， 过时的生命周期会给React未来版本推出异步渲染后带来不安全的编码实践， 就是上面这三个 UNSAFE 的钩子；预计在未来的异步渲染中，这些钩子可能被误用，所以尽量避免使用；
-    - 
+    - 新生命周期阶段
+        -- 初始化阶段： 由 ReactDOM.render()触发，初次渲染
+            1. constructor()
+            2. componentWillMount()
+            3. render()
+            4. componentDidMount() ===> 常用
+                一般这个钩子中做一些初始化的事，如：开启定时器，发送网络请求，
+        -- 更新阶段： 由组件内部 this.setState() 或者父组件重新render触发
+            1. getDerivedStateFromProps
+            2. shouldComponentUpdate()
+            3. render()
+            4. getSnapshotBeforeUpdate
+            5. componentDidUpdate()
+        -- 卸载组件： 由 ReactDOM.UnmountComponentAtNode()触发
+            1. componentWillUnmount() 
+        -- 总结：重要的钩子
+            1. render
+            2. componentDidMount
+            3. componentWillUnmount
+        -- 即将废弃的钩子：
+            1. componentWillMount
+            2. componentWillUpdate
+            3. componentWillReceiveProps
+* React Diffing 算法：最小力度是节点（也就是对比的最小单位， 是所有节点）
+    - 经典面试题
+        1. react中的key 有什么作用？（key的内部原理是什么）
+            -- 简单的说，key 就是虚拟DOM中对象的标识，在更新显示时候，key 起着及其重要的作用
+            -- 详细的说： 当状态中数据发生变化时候，react会根据新数据生成新的虚拟DOM， 随后React进行虚拟DOM 与旧虚拟DOM的diff比较，比较规则如下：
+                1. 旧虚拟DOM中找到了与新虚拟DOM相同的key
+                   - 若虚拟DOM中内容没变，直接使用之前的真实DOM
+                   - 若虚拟DOM中内容变了，则生成新的真实DOM，随后替换掉页面中之前的真实DOM
+                2. 旧虚拟DOM中未找到与新虚拟DOM相同的key
+                    - 根据数据创建新的真实的DOM，随后渲染到页面
+        2. 为什么遍历列表时候，key最好不要用index?
+            -- 若对数据进行：逆序添加，逆序删除等破坏顺序的操作： 
+                会产生没有必要的真实DOM的更新---> 页面效果没问题，但是效率低
+            --  如果结构中还包含输入类的DOM， 则会产生错误的DOM 更新---》界面有问题
+            -- 注意，如果不存在对数据的逆序添加，逆序删除等破坏顺序的操作，仅用于渲染列表用于展示，则使用index 是没有问题的。
+        3. 开发中如何使用选择key?
+            -- 最好使用每条数据的唯一标识，比如 id, 手机号，身份证号，学号等唯一值；
+            -- 如果确定只是单一的展示数据，用index也是可以的。
+
+
         
 
