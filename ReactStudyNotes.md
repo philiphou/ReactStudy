@@ -228,7 +228,20 @@
         3. 开发中如何使用选择key?
             -- 最好使用每条数据的唯一标识，比如 id, 手机号，身份证号，学号等唯一值；
             -- 如果确定只是单一的展示数据，用index也是可以的。
-
+* React 脚手架
+    - 使用create-react-app 创建 react 应用
+        1. xxx 脚手架是用来帮助程序员快速创建一个基于 xxx库的模板项目
+            - 包含了所有需要的配置 （语法检查，jsx 编译， devServer）
+            - 下载好了所有相关的依赖
+            - 可以直接运行一个简单效果
+        2. react 提供了一个用于创建react项目的脚手架： create-react-app
+        3. 项目的整体技术架构为： react + webpack +es6 +eslint
+        4. 使用脚手架开发的项目特点： 模块化，组件化，工程化
+    - 创建项目并启动： 
+        1. 全局安装：  npm install -g create-react-app
+        2. 切换到想床项目的目录 使用命令： create-react-app my-app
+        3. 进入项目文件夹： cd my-app
+        4. 启动项目： npm start
 
         
 
